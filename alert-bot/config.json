@@ -1,0 +1,15 @@
+[
+  {
+    "name": "alertcarolina",
+    "feed_url": "https://alertcarolina.unc.edu/notifications/feed/",
+    "webhook_env": "DISCORD_WEBHOOK_ALERTCAROLINA",
+    "display_name": "Alert Carolina",
+    "avatar_url": "https://alertcarolina.unc.edu/wp-content/uploads/2016/12/cropped-h2OkRTmA_400x400-32x32.png",
+    "category_colors": {
+      "Emergency": 14824484,
+      "Crime Alert": 16101120,
+      "Informational": 4879577,
+      "Normal": 3066993
+    }
+  }
+]
