@@ -1,4 +1,4 @@
-import feedparser, requests, json, os, re, html
+import feedparser, requests, json, os, re, html, time
 
 STATE_DIR = "state"
 DEFAULT_COLOR = 0x4A90D9
@@ -25,6 +25,12 @@ def get_category(entry):
     tags = entry.get("tags", [])
     return tags[0]["term"] if tags else "Informational"
 
+def get_iso_timestamp(entry):
+    parsed = entry.get("published_parsed")
+    if parsed:
+        return time.strftime("%Y-%m-%dT%H:%M:%S", parsed)
+    return None
+
 def post_to_discord(entry, source):
     category = get_category(entry)
     color = source["category_colors"].get(category, DEFAULT_COLOR)
@@ -35,8 +41,11 @@ def post_to_discord(entry, source):
         "color": color,
         "thumbnail": {"url": source["avatar_url"]},
         "footer": {"text": f"{source['display_name']} – {category}"},
-        "timestamp": entry.get("published", ""),
     }
+    timestamp = get_iso_timestamp(entry)
+    if timestamp:
+        embed["timestamp"] = timestamp
+
     payload = {
         "username": source["display_name"],
         "avatar_url": source["avatar_url"],
